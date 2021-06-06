@@ -43,10 +43,19 @@ public class RabbitProducer {
 
   @Scheduled(fixedDelay = 5000, initialDelay = 15000)
   public String asyncsendAndReceiveMessage() throws InterruptedException, ExecutionException, TimeoutException {
-    System.out.println("sending message async with reply queue");
-    ListenableFuture<String> objectListenableFuture = asyncAmqpTemplate.convertSendAndReceive("reqReplyExchange","reqReply", "Hello Ravi " + Instant.now());
+    System.out.println("sending message async with reply queue 1");
+    ListenableFuture<String> objectListenableFuture = asyncAmqpTemplate.convertSendAndReceive("reqReplyExchange","reqReply", "Hello Ravi 1 " + Instant.now());
     String receivedMessage = objectListenableFuture.get();
-    System.out.println("received back message async = " + receivedMessage);
+    System.out.println("received back message async 1= " + receivedMessage);
+    return receivedMessage;
+  }
+
+  @Scheduled(fixedDelay = 5000, initialDelay = 15000)
+  public String asyncsendAndReceiveMessage2() throws InterruptedException, ExecutionException, TimeoutException {
+    System.out.println("sending message async with reply queue 2");
+    ListenableFuture<String> objectListenableFuture = asyncAmqpTemplate.convertSendAndReceive("reqReplyExchange","reqReply", "Hello Ravi 2 " + Instant.now());
+    String receivedMessage = objectListenableFuture.get();
+    System.out.println("received back message async 2 = " + receivedMessage);
     return receivedMessage;
   }
 

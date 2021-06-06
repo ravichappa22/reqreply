@@ -30,7 +30,7 @@ public class RabbitConsumer {
         exchange = @Exchange(value = "reqReplyExchange", ignoreDeclarationExceptions = "true"),
         key = "reqReply"))
   public void receiveMessagereqreplyTo (Message receivedMessage) {
-    System.out.println("receivedMessage reply = " + new String(receivedMessage.getBody()) + " reply to = " + receivedMessage.getMessageProperties().getReplyTo());
+    System.out.println(" reply = " + new String(receivedMessage.getBody()) + " reply to = " + receivedMessage.getMessageProperties().getReplyTo());
     String reply = new String(receivedMessage.getBody()).concat(" sending Reply");
     Message message = new Message(reply.getBytes(), receivedMessage.getMessageProperties());
     rabbitTemplate.convertAndSend(receivedMessage.getMessageProperties().getReplyTo(), message);
