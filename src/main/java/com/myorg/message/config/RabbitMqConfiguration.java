@@ -48,17 +48,24 @@ public class RabbitMqConfiguration {
     return new RabbitTemplate(connectionFactory());
   }
 
-  @Bean
+  @Bean("asyncAmqpTemplate")
   public AsyncAmqpTemplate asyncAmqpTemplate() {
     AsyncRabbitTemplate asyncRabbitTemplate = new AsyncRabbitTemplate(rabbitTemplate());
     asyncRabbitTemplate.setReceiveTimeout(60000);
     return new AsyncRabbitTemplate(rabbitTemplate());
   }
 
+  @Bean("asyncAmqpTemplatelowTimeOut")
+  public AsyncAmqpTemplate asyncAmqpTemplatelowTimeOut() {
+    AsyncRabbitTemplate asyncRabbitTemplate = new AsyncRabbitTemplate(rabbitTemplate());
+    asyncRabbitTemplate.setReceiveTimeout(5000);
+    return new AsyncRabbitTemplate(rabbitTemplate());
+  }
+
   @Bean
   public TaskScheduler taskScheduler(){
     ThreadPoolTaskScheduler threadPoolTaskScheduler =  new ThreadPoolTaskScheduler();
-    threadPoolTaskScheduler.setPoolSize(10);
+    threadPoolTaskScheduler.setPoolSize(100);
     return threadPoolTaskScheduler;
   }
 }
