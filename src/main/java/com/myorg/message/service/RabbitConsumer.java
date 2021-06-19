@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myorg.message.vo.User;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -28,6 +27,7 @@ public class RabbitConsumer {
         exchange = @Exchange(value = "reqReplyExchange", ignoreDeclarationExceptions = "true"),
         key = "dispatch"))
     public void receiveMessagereqreply(Message receivedMessage) {
+      System.out.println("receivedMessage at receiveMessagereqreply = " + receivedMessage.getMessageProperties().getReplyTo());
       String reply = new String(receivedMessage.getBody()).concat(" sending Reply");
       Message message = new Message(reply.getBytes(), receivedMessage.getMessageProperties());
       rabbitTemplate.convertAndSend(receivedMessage.getMessageProperties().getReplyTo(), message);
